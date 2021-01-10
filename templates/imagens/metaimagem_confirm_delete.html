@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Deletar Grupo
+{% endblock %}
+
+{% block main %}
+<div class="be-content">
+    <div class="page-head">
+        <h2 class="page-head-title">Imagem</h2>
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb page-head-nav">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#">Imagem</a></li>
+                <li class="breadcrumb-item active">Deletar</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="main-content container-fluid">
+        <div class="row">
+            <div class="col-lg-11">
+                <div class="card card-table">
+                    <div class="card-header">Imagem
+                        <div class="card-body">
+                            <div class="form-group p-4">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <h3> Você está certo de que quer deletar a imagem: {{ object }}</h3>
+                                    {{ form.as_p }}
+                                    <button type="submit" class="btn btn-danger"> Deletar </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

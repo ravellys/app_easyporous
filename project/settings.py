@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Apps instalados
+    'bootstrapform',
+
     # Apps criados
     'apps.dashboard',
     'apps.user',
