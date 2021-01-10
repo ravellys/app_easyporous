@@ -1,10 +1,10 @@
-<li class="parent {% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_delete' or request.resolver_match.url_name == 'service_detail' or request.resolver_match.url_name == 'service_update' %} active open {% endif %}">
+<li class="parent">
     <a href="#"><i class="icon mdi mdi-image"></i><span>Imagens</span></a>
     <ul class="sub-menu">
-        <li class="{% if request.resolver_match.url_name == 'service_list'%}active{% endif %}">
+        <li class="{% if request.resolver_match.url_name == 'service_list' %}active{% endif %}">
             <a href="{% url 'list_image' %}">Listar</a>
         </li>
-        <li class="{% if request.resolver_match.url_name == 'service_create'%}active{% endif %}">
+        <li class="{% if request.resolver_match.url_name == 'service_create' %}active{% endif %}">
             <a href="{% url 'create_image' %}">Upload</a>
         </li>
     </ul>

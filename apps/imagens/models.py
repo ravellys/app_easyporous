@@ -23,7 +23,7 @@ class MetaImagem(BestPraticesModel):
 
 class Imagem(BestPraticesModel):
     descricao = models.CharField(max_length=100, verbose_name='Descricao', null=True, blank=True)
-    meta_imagem = models.ForeignKey(MetaImagem, on_delete=models.PROTECT, verbose_name='meta_imagem')
+    meta_imagem = models.ForeignKey(MetaImagem, on_delete=models.CASCADE, verbose_name='meta_imagem')
     imagem = models.FileField(verbose_name='Imagem')
 
     def __str__(self):
