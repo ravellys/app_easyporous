@@ -1,0 +1,17 @@
+{% extends 'base/clear.html' %}
+{% load static %}
+{% block title %}Solicitação de reset de senha{% endblock %}
+{% block main %}
+    <div class="splash-container">
+        <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <img src="{% static 'logo/logo_preta.png' %}" alt="logo" width="200" height="70" class="logo-img">
+            </div>
+            <div class="card-body">
+                <div class="text-center"><h4><strong>Solicitação de nova senha !</strong></h4></div><br>
+                <div class="text-center"><span>Verifique a <strong>caixa de entrada ou spans</strong> do Email informado.
+                </span></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
