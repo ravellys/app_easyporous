@@ -1,0 +1,45 @@
+<li class="parent {% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_delete' or request.resolver_match.url_name == 'service_detail' or request.resolver_match.url_name == 'service_update' %} active open {% endif %}">
+    <a href="#"><i class="icon mdi mdi-city"></i><span>Empresa</span></a>
+    <ul class="sub-menu">
+        <li class="{% if request.resolver_match.url_name == 'service_list'%}active{% endif %}">
+            <a href="{% url 'list_empresa' %}">Listar</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'service_create'%}active{% endif %}">
+            <a href="{% url 'create_empresa' %}">Criar</a>
+        </li>
+    </ul>
+</li>
+<li class="parent {% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_delete' or request.resolver_match.url_name == 'service_detail' or request.resolver_match.url_name == 'service_update' %} active open {% endif %}">
+    <a href="#"><i class="icon mdi mdi-account"></i><span>Usuário</span></a>
+    <ul class="sub-menu">
+        <li class="{% if request.resolver_match.url_name == 'service_list'%}active{% endif %}">
+            <a href="{% url 'list_user' %}">Listar</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'service_create'%}active{% endif %}">
+            <a href="{% url 'create_user' %}">Criar</a>
+        </li>
+    </ul>
+</li>
+<li class="parent {% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_delete' or request.resolver_match.url_name == 'service_detail' or request.resolver_match.url_name == 'service_update' %} active open {% endif %}">
+    <a href="#"><i class="icon mdi mdi-group"></i><span>Grupo de documento</span></a>
+    <ul class="sub-menu">
+        <li class="{% if request.resolver_match.url_name == 'service_list'%}active{% endif %}">
+            <a href="{% url 'list_grupo' %}">Listar</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'service_create'%}active{% endif %}">
+            <a href="{% url 'create_grupo' %}">Criar</a>
+        </li>
+    </ul>
+</li>
+<li class="parent {% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_delete' or request.resolver_match.url_name == 'service_detail' or request.resolver_match.url_name == 'service_update' %} active open {% endif %}">
+    <a href="#"><i class="icon mdi mdi-group-work"></i><span>Tipo de documento</span></a>
+    <ul class="sub-menu">
+        <li class="{% if request.resolver_match.url_name == 'service_list'%}active{% endif %}">
+            <a href="{% url 'list_tipo' %}">Listar</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'service_create'%}active{% endif %}">
+            <a href="{% url 'create_tipo' %}">Criar</a>
+        </li>
+    </ul>
+</li>
+
