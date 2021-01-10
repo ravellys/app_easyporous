@@ -21,7 +21,6 @@ class MetaImagemCreateView(CreateView):
         data = request.POST
         user = request.user
         files = request.FILES.getlist('imagens')
-        print(request.FILES)
 
         MetaImagem.objects.create(
             user=user,
@@ -39,7 +38,6 @@ class MetaImagemCreateView(CreateView):
             ).save()
 
         return redirect(reverse('list_image'))
-
 
 
 class MetaImagemDeleteView(DeleteView):

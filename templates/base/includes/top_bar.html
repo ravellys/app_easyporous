@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand fixed-top be-top-header">
     <div class="container-fluid">
         <a href="{% url 'dashboard-main' %}" class="navbar-brand pl-2">
-            <img class="flex-column-reverse" src="{% static 'logo/logo_preta.png' %}" alt="logo" width="150px">
+            <img class="flex-column-reverse" src="{% static 'logo/logo.png' %}" alt="logo" width="150px">
         </a>
         {% if user.groups.all.0.name == "Cliente" %}
         <div class="container-fluid">
