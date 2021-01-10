@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, DetailView
 
-from apps.imagens.models import MetaImagem
+from apps.imagens.forms import MetaImagemForm
+from apps.imagens.models import MetaImagem, Imagem
 
 
 class MetaImagemListView(ListView):
@@ -13,12 +14,14 @@ class MetaImagemListView(ListView):
 
 class MetaImagemCreateView(CreateView):
     model = MetaImagem
-    fields = ['descricao', 'tipo', ]
+    form_class = MetaImagemForm
     success_url = reverse_lazy('list_image')
 
     def post(self, request, *args, **kwargs):
         data = request.POST
         user = request.user
+        files = request.FILES.getlist('imagens')
+        print(request.FILES)
 
         MetaImagem.objects.create(
             user=user,
@@ -26,8 +29,16 @@ class MetaImagemCreateView(CreateView):
             tipo=data['tipo'],
         ).save()
 
-        return redirect(reverse('list_image'))
+        meta_imagem = MetaImagem.all_objects.last()
 
+        for file in files:
+            Imagem.objects.create(
+                descricao=str(file),
+                meta_imagem=meta_imagem,
+                imagem=file,
+            ).save()
+
+        return redirect(reverse('list_image'))
 
 
 
