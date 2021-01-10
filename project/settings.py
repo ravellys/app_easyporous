@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # Apps instalados
     'bootstrapform',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
 
     # Apps criados
     'apps.dashboard',
@@ -142,3 +143,7 @@ MEDIAFILES_DIRS = (
 )
 
 AUTH_USER_MODEL = 'user.User'
+
+
+# configuration DjangoDashPlotly See: https://pypi.org/project/django-plotly-dash/
+X_FRAME_OPTIONS = 'SAMEORIGIN'

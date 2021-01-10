@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from apps.imagens.views import MetaImagemListView, MetaImagemCreateView, MetaImagemDeleteView, MetaImagemDetailView
+from apps.imagens.dash_app import exemplo
+
 
 urlpatterns = [
     path('listar/', MetaImagemListView.as_view(), name='list_image'),
