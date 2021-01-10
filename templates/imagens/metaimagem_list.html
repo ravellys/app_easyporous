@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Lista de Documentos
+{% endblock %}
+
+{% block main %}
+    <div class="be-content">
+        <div class="page-head">
+            <h2 class="page-head-title">Lista de Imagens</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="#">Documentos</a></li>
+                    <li class="breadcrumb-item active">Lista</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="card card-table">
+                        <div class="card-header">Lista de Documentos
+                            <div class="tools dropdown">
+                                <a href="#" role="button" data-toggle="dropdown" class="dropdown-toggle"><span
+                                        class="icon mdi mdi-more-vert"></span></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width:20%;">Descrição</th>
+                                    <th style="width:15%;">Tipo</th>
+                                    <th style="width:20%;">Usuário</th>
+                                    <th style="width:40%;">data upload</th>
+                                    <th class="actions" style="width:40%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for imagem in object_list %}
+                                    <tr>
+                                        <td><a href="">{{ imagem.descricao }}</a></td>
+                                        <td>{{ imagem.tipo }}</td>
+                                        <td>{{ imagem.user }}</td>
+                                        <td>{{ imagem.created }}</td>
+
+                                        <td class="actions">
+                                            <a href="{% url 'delete_image' imagem.id %}" class="icon"
+                                               style="margin-right: 1rem"><i class="mdi mdi-delete"></i></a>
+                                            <a href="{% url 'detail_image' imagem.id %}" style="margin-right: 1rem"
+                                               class="icon"><i class="mdi mdi-eye"></i></a>                                           <a href="" style="margin-right: 1rem"
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        {% if page_obj.has_other_pages %}
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {% if page_obj.has_previous %}
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="?page={{ page_obj.previous_page_number }}"
+                                                               tabindex="-1">Anterior</a>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% for i in page_obj.paginator.page_range %}
+                                                        {% if page_obj.number == i %}
+                                                            <li class="page-item active">
+                                                                <div class="page-link">{{ i }}</div>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="page-item"><a class="page-link"
+                                                                                     href="?page={{ i }}">{{ i }}</a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if page_obj.has_next %}
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                                                        </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </nav>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

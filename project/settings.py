@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Apps instalados
+    'bootstrapform',
+
     # Apps criados
     'apps.dashboard',
+    'apps.user',
+    'apps.imagens',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +140,5 @@ MEDIA_URL = '/media/'
 MEDIAFILES_DIRS = (
     base_dir_join('media'),
 )
+
+AUTH_USER_MODEL = 'user.User'

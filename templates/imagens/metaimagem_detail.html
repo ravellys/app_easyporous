@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block title %} Detalhes da Imagem {% endblock %}
+{% block main %}
+    <div class="be-content">
+        <div class="page-head">
+            <h2 class="page-head-title">Imagem</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="#">Imagem</a></li>
+                    <li class="breadcrumb-item active">Detalhes</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-border-color card-border-color-primary">
+                        <div class="card-header card-header-divider"> Imagem <span class="card-subtitle"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-12 col-sm-3 col-form-label text-sm-right">
+                                    <label>Descrição:</label>
+                                </div>
+                                <div class="col-12 col-sm-8 col-lg-6">
+                                    <input class="form-control" type="text" value="{{ object.descricao }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <h5> IMAGEM EXEMPLO</h5>
+                                <img src="https://teslaimagem.com.br/wp-content/uploads/2018/10/tomografia-de-cranio-tesla-imagem-brasilia.jpg">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
