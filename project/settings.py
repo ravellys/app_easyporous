@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def base_dir_join(*args):
     return os.path.join(BASE_DIR, *args)
 
+APPS_DIR = base_dir_join('apps')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -147,3 +148,4 @@ AUTH_USER_MODEL = 'user.User'
 
 # configuration DjangoDashPlotly See: https://pypi.org/project/django-plotly-dash/
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+

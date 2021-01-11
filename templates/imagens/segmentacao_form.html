@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+    {% if object %} Atualizar {% else %} Segmentar {% endif %} Imagem
+{% endblock %}
+{% load bootstrap %}
+
+{% block main %}
+
+
+    <div class="be-content">
+        <div class="page-head">
+            <h2 class="page-head-title">{% if object %} Atualização {% else %} Segmentação {% endif %} de Imagem</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard-main' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_image' %}">Imagem</a></li>
+                    {% if object %}
+                        <li class="breadcrumb-item active">Segmentação</li>
+                    {% else %}
+                        <li class="breadcrumb-item active">Segmentação</li>
+                    {% endif %}
+                </ol>
+            </nav>
+        </div>
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            {% if object %}
+                                <div class="card-header card-header-divider">
+                                    Atualização
+                                    <span class="card-subtitle">
+                                Preencha as informações abaixo para salvar
+                            </span>
+                                </div>
+                            {% else %}
+                                Upload
+                            {% endif %}
+                        </div>
+                        <div class="card-body m-4">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form | bootstrap }}
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <a href="{% url 'list_image' %}" class="btn btn-outline-dark"> Voltar </a>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button onclick="verificarCampo()" type="submit" class="btn btn-info">
+                                            {% if object %}
+                                                Editar
+                                            {% else %}
+                                                Salvar
+                                            {% endif %}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% block title %} Detalhes da Imagem {% endblock %}
+{% block main %}
+    <div class="be-content">
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-body">
+
+                        {% include 'dashplotly/plot_image.html' %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
