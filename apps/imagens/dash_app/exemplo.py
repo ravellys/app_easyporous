@@ -22,10 +22,9 @@ app.layout = html.Div([
     ),
 ])
 
-
 @app.callback(
-               Output('slider-graph', 'figure'),
-              [Input('slider-updatemode', 'value')])
+    Output('slider-graph', 'figure'),
+    [Input('slider-updatemode', 'value')])
 def display_value(value):
     x = []
     for i in range(value):
@@ -33,7 +32,7 @@ def display_value(value):
 
     y = []
     for i in range(value):
-        y.append(i*i)
+        y.append(i * i)
 
     graph = go.Scatter(
         x=x,

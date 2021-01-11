@@ -7,6 +7,18 @@
         <li class="{% if request.resolver_match.url_name == 'service_create' %}active{% endif %}">
             <a href="{% url 'create_image' %}">Upload</a>
         </li>
+        <li class="{% if request.resolver_match.url_name == 'service_create' %}active{% endif %}">
+            <a href="{% url 'detail_images' %}">detalhes</a>
+        </li>
+    </ul>
+</li>
+
+<li class="parent">
+    <a href="#"><i class="icon mdi mdi-edit"></i><span>PID</span></a>
+    <ul class="sub-menu">
+        <li class="{% if request.resolver_match.url_name == 'service_list' %}active{% endif %}">
+            <a href="{% url 'segmentacao_image' %}">Segmentar</a>
+        </li>
     </ul>
 </li>
 

@@ -16,6 +16,7 @@ class MetaImagem(BestPraticesModel):
     descricao = models.CharField(max_length=100, verbose_name='Descricao', null=True, blank=True)
     tipo = models.CharField(max_length=24, choices=tipos_imagens, null=True, blank=True,
                             verbose_name='Tipo de Imagem')
+    is_segmentada = models.BooleanField(default=False, verbose_name='A imagem está segmentada')
 
     def __str__(self):
         return self.descricao
