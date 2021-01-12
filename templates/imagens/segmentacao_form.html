@@ -9,35 +9,15 @@
 
 
     <div class="be-content">
-        <div class="page-head">
-            <h2 class="page-head-title">{% if object %} Atualização {% else %} Segmentação {% endif %} de Imagem</h2>
-            <nav aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb page-head-nav">
-                    <li class="breadcrumb-item"><a href="{% url 'dashboard-main' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'list_image' %}">Imagem</a></li>
-                    {% if object %}
-                        <li class="breadcrumb-item active">Segmentação</li>
-                    {% else %}
-                        <li class="breadcrumb-item active">Segmentação</li>
-                    {% endif %}
-                </ol>
-            </nav>
-        </div>
+
+
         <div class="main-content container-fluid">
             <div class="row">
                 <div class="col-lg-11">
                     <div class="card card-table">
                         <div class="card-header">
-                            {% if object %}
-                                <div class="card-header card-header-divider">
-                                    Atualização
-                                    <span class="card-subtitle">
-                                Preencha as informações abaixo para salvar
-                            </span>
-                                </div>
-                            {% else %}
-                                Upload
-                            {% endif %}
+                            <h2 class="page-head-title">{% if object %} Atualização {% else %} Segmentação {% endif %}
+                                de Imagem</h2>
                         </div>
                         <div class="card-body m-4">
                             <form method="post" enctype="multipart/form-data">
