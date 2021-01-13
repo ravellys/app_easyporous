@@ -21,6 +21,7 @@
                                 <tr>
                                     <th style="width:20%;">Descrição</th>
                                     <th style="width:20%;">É Segmentada?</th>
+                                    <th style="width:20%;">Porosidade</th>
                                     <th style="width:15%;">Tipo
                                     </th>
                                     <th style="width:20%;">Usuário</th>
@@ -33,6 +34,13 @@
                                     <tr>
                                         <td><a href="">{{ imagem.descricao }}</a></td>
                                         <td>{{ imagem.is_segmentada }}</td>
+                                        <td>
+                                            {% if imagem.is_segmentada %}
+                                                {{ imagem.porosidade }}
+                                            {% else %}
+                                                imagem não segmentada
+                                            {% endif %}
+                                        </td>
                                         <td>{{ imagem.tipo }}</td>
                                         <td>{{ imagem.user }}</td>
                                         <td>{{ imagem.created }}</td>

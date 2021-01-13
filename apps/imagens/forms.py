@@ -6,7 +6,10 @@ tipos_imagens = [
     ('Rocha', 'Rocha'),
 ]
 
-selector_meta_imagens = [(img.id, img) for img in MetaImagem.objects.all()]
+try:
+    selector_meta_imagens = [(img.id, img) for img in MetaImagem.objects.all()]
+except:
+    selector_meta_imagens = [('', '')]
 
 selector_segmentacao = [
     ('otsu', 'Otsu'),
