@@ -24,13 +24,15 @@ def import_file(list_files):
 
 
 def seleciona_lista_arquivos(meta_imagem_id):
-    imagens = Imagem.objects.filter(meta_imagem=meta_imagem_id)
+    imagens = Imagem.objects.filter(meta_imagem=int(meta_imagem_id))
     lista_caminhos = [img.imagem.path for img in imagens]
     return lista_caminhos
 
 
+def porosidade(im):
+    return 1 - (im.sum() / (im.shape[0] * im.shape[1] * im.shape[2]))
+
+
 if __name__ == '__main__':
 
-    list_imagens = seleciona_lista_arquivos(21)
-    im = import_file(list_imagens)
-    print(im[0])
+    print(porosidade(30))

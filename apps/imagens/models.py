@@ -12,11 +12,12 @@ class MetaImagem(BestPraticesModel):
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='usuário')
     protocolo = models.UUIDField(auto_created=True, unique=True, default=uuid.uuid4,
-                                             verbose_name='Protocolo')
+                                 verbose_name='Protocolo')
     descricao = models.CharField(max_length=100, verbose_name='Descricao', null=True, blank=True)
     tipo = models.CharField(max_length=24, choices=tipos_imagens, null=True, blank=True,
                             verbose_name='Tipo de Imagem')
     is_segmentada = models.BooleanField(default=False, verbose_name='A imagem está segmentada')
+    porosidade = models.DecimalField(null=True, blank=True, verbose_name='porosidade', max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.descricao
@@ -29,7 +30,3 @@ class Imagem(BestPraticesModel):
 
     def __str__(self):
         return self.descricao
-
-
-
-
