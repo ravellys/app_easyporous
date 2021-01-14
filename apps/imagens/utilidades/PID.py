@@ -7,6 +7,7 @@ from apps.imagens.models import Imagem, MetaImagem
 
 def salvar_imagens_segmentadas(metodo_segmentacao, im_seg, list_imagens, meta_imagem_seg):
     for img, file in zip(im_seg, list_imagens):
+        img = img.T
         img = Image.fromarray(img.astype(np.uint8))
         img.save(".".join(file.split('.')[:-1]) + f'seg_{metodo_segmentacao}.tif')
         file_seg = ".".join(file.split('.')[:-1]) + f'seg_{metodo_segmentacao}.tif'
