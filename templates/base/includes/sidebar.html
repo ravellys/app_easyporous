@@ -8,7 +8,7 @@
         <div class="sidebar-brand-text mx-3">EasyPorous</div>
     </a>
 
-     <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
@@ -26,19 +26,35 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-           aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-cog"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePID"
+           aria-expanded="true" aria-controls="collapsePID">
+            <i class="fas fa-fw fa-edit"></i>
             <span>PID</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        <div id="collapsePID" class="collapse" aria-labelledby="headingPID"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'segmentacao_image' %}">Segmentar</a>
+                <a class="collapse-item" href="{% url 'segmentacao_image' %}">Filtrar</a>
             </div>
         </div>
     </li>
 
-
-
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFD"
+           aria-expanded="true" aria-controls="collapseFD">
+            <i class="fas fa-fw fa-signal"></i>
+            <span>Física Digital</span>
+        </a>
+        <div id="collapseFD" class="collapse" aria-labelledby="headingFD"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="#">VER</a>
+                <a class="collapse-item" href="#">Rede de Poros</a>
+                <a class="collapse-item" href="">Curva de Saturação</a>
+                <a class="collapse-item" href="">Permeabilidade</a>
+                <a class="collapse-item" href="">Porosidade</a>
+            </div>
+        </div>
+    </li>
 </ul>
