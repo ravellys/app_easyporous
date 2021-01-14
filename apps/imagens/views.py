@@ -1,15 +1,13 @@
-from PIL import Image
-import numpy as np
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
-from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, DetailView, TemplateView
 
-from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos, import_file, porosidade
+from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos
 from apps.imagens.forms import MetaImagemForm, SegmentacaoForm
 from apps.imagens.models import MetaImagem, Imagem
+from apps.imagens.utilidades.PID import salvar_imagens_segmentadas, segmenta_imagem, cria_meta_imagem_segmentada
 
 
 class MetaImagemListView(ListView):
@@ -67,37 +65,13 @@ class SegmentacaoView(CreateView):
     def post(self, request, *args, **kwargs):
         data = request.POST
         user = request.user
-        meta_imagem = MetaImagem.objects.get(id=data['meta_imagem'])
-
-
-        # TODO: refatorar
         meta_imagem_id = int(data['meta_imagem'])
+        metodo_segmentacao = data['metodo_segmentacao']
+
+        meta_imagem = MetaImagem.objects.get(id=meta_imagem_id)
         list_imagens = seleciona_lista_arquivos(meta_imagem_id)
-        from skimage.filters import threshold_otsu
-        im = import_file(list_imagens)
-        thresh = threshold_otsu(im.ravel())  # Determina limiar de poros e solidos
-        im_seg = im > thresh
-
-        MetaImagem.objects.create(
-            user=user,
-            descricao=meta_imagem.descricao + ', segmentada por ' + data['metodo_segmentacao'],
-            tipo=meta_imagem.tipo,
-            is_segmentada=True,
-            porosidade=porosidade(im_seg)
-
-        ).save()
-
-        for img, file in zip(im_seg, list_imagens):
-            img = Image.fromarray(img.astype(np.uint8))
-            img.save(".".join(file.split('.')[:-1]) + f'seg_{data["metodo_segmentacao"]}.tif')
-
-        meta_imagem_seg = MetaImagem.all_objects.last()
-        for file in list_imagens:
-            file_seg = ".".join(file.split('.')[:-1]) + f'seg_{data["metodo_segmentacao"]}.tif'
-            Imagem.objects.create(
-                descricao=str(file)+f'_seg_{data["metodo_segmentacao"]}',
-                meta_imagem=meta_imagem_seg,
-                imagem=file_seg,
-            ).save()
+        im_seg = segmenta_imagem(list_imagens)
+        meta_imagem_seg = cria_meta_imagem_segmentada(user, meta_imagem, metodo_segmentacao, im_seg)
+        salvar_imagens_segmentadas(metodo_segmentacao, im_seg, list_imagens, meta_imagem_seg)
 
         return redirect(reverse('list_image'))
