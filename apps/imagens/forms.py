@@ -6,11 +6,6 @@ tipos_imagens = [
     ('Rocha', 'Rocha'),
 ]
 
-try:
-    selector_meta_imagens = [(img.id, img) for img in MetaImagem.objects.all()]
-except:
-    selector_meta_imagens = [('', '')]
-
 selector_segmentacao = [
     ('otsu', 'Otsu'),
     ('mean', 'Média')
@@ -32,10 +27,10 @@ class MetaImagemForm(forms.ModelForm):
 
 
 class SegmentacaoForm(forms.ModelForm):
-    meta_imagem = forms.ChoiceField(
+    meta_imagem = forms.ModelChoiceField(
+        queryset=MetaImagem.objects.filter(is_segmentada=False),
         required=True,
         widget=forms.Select,
-        choices=selector_meta_imagens,
     )
     metodo_segmentacao = forms.ChoiceField(
         required=True,
