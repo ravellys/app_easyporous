@@ -1,14 +1,10 @@
 from django import forms
 from apps.imagens.models import MetaImagem
+from apps.imagens.utilidades.segmentacao import CHOICES_SEGMENTACAO
 
 tipos_imagens = [
     ('Solo', 'Solo'),
     ('Rocha', 'Rocha'),
-]
-
-selector_segmentacao = [
-    ('otsu', 'Otsu'),
-    ('mean', 'Média')
 ]
 
 
@@ -35,7 +31,7 @@ class SegmentacaoForm(forms.ModelForm):
     metodo_segmentacao = forms.ChoiceField(
         required=True,
         widget=forms.Select,
-        choices=selector_segmentacao,
+        choices=CHOICES_SEGMENTACAO,
     )
 
     class Meta:

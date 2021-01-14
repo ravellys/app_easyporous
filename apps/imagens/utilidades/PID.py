@@ -1,8 +1,7 @@
 from PIL import Image
 import numpy as np
-from skimage.filters import threshold_otsu
 
-from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos, import_file, porosidade
+from apps.imagens.dash_app.utilidades.import_imagem import porosidade
 from apps.imagens.models import Imagem, MetaImagem
 
 
@@ -16,13 +15,6 @@ def salvar_imagens_segmentadas(metodo_segmentacao, im_seg, list_imagens, meta_im
             meta_imagem=meta_imagem_seg,
             imagem=file_seg,
         ).save()
-
-
-def segmenta_imagem(list_imagens):
-    im = import_file(list_imagens)
-    thresh = threshold_otsu(im.ravel())  # Determina limiar de poros e solidos
-    im_seg = im > thresh
-    return im_seg
 
 
 def cria_meta_imagem_segmentada(user, meta_imagem, metodo_segmentacao, im_seg):

@@ -7,7 +7,8 @@ from django.views.generic import ListView, CreateView, DeleteView, DetailView, T
 from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos
 from apps.imagens.forms import MetaImagemForm, SegmentacaoForm
 from apps.imagens.models import MetaImagem, Imagem
-from apps.imagens.utilidades.PID import salvar_imagens_segmentadas, segmenta_imagem, cria_meta_imagem_segmentada
+from apps.imagens.utilidades.PID import salvar_imagens_segmentadas, cria_meta_imagem_segmentada
+from apps.imagens.utilidades.segmentacao import segmenta_imagem
 
 
 class MetaImagemListView(ListView):
@@ -70,7 +71,7 @@ class SegmentacaoView(CreateView):
 
         meta_imagem = MetaImagem.objects.get(id=meta_imagem_id)
         list_imagens = seleciona_lista_arquivos(meta_imagem_id)
-        im_seg = segmenta_imagem(list_imagens)
+        im_seg = segmenta_imagem(list_imagens, metodo_segmentacao)
         meta_imagem_seg = cria_meta_imagem_segmentada(user, meta_imagem, metodo_segmentacao, im_seg)
         salvar_imagens_segmentadas(metodo_segmentacao, im_seg, list_imagens, meta_imagem_seg)
 
