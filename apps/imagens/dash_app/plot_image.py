@@ -3,6 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+from dash_slicer import VolumeSlicer
 from django_plotly_dash import DjangoDash
 from skimage import data
 import json
@@ -40,7 +41,7 @@ app.layout = html.Div(
             id='pos-img-slider',
             value=0,
             step=1,
-            marks={i: f'{i}' for i in range(20)},
+            marks={i: f'{i}' for i in range(10)},
             updatemode='drag',
         ),
 
@@ -48,16 +49,15 @@ app.layout = html.Div(
 )
 
 
-@app.callback(
-    Output('pos-img-slider', 'marks'),
-    [Input('dropdown', 'value')],
-)
-def update_slider_marks(meta_image_id):
-    list_imagens = seleciona_lista_arquivos(meta_image_id)
-    tamanho = len(list_imagens)
-    marks = {i: f'{i}' for i in range(tamanho)},
-    return marks
-
+# @app.callback(
+#     Output('pos-img-slider', 'marks'),
+#     [Input('dropdown', 'value')],
+# )
+# def update_slider_marks(meta_image_id):
+#     list_imagens = seleciona_lista_arquivos(meta_image_id)
+#     tamanho = len(list_imagens)
+#     marks = {i: f'{i}' for i in range(tamanho)},
+#     return marks
 
 @app.callback(
     Output('imagem', 'figure'),
