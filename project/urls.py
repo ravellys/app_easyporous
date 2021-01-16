@@ -17,15 +17,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+
+from apps.imagens.api.viewsets import MetaImagemViewSet
+
+router = routers.DefaultRouter()
+router.register(r'api/metaimagem', MetaImagemViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('apps.dashboard.urls')),
-    path('usuário/', include("apps.user.urls")),
-    path('imagens/', include("apps.imagens.urls")),
+                  path('admin/', admin.site.urls),
+                  path('', include('apps.dashboard.urls')),
+                  path('usuário/', include("apps.user.urls")),
+                  path('imagens/', include("apps.imagens.urls")),
 
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+                  path('django_plotly_dash/', include('django_plotly_dash.urls')),
+                  path('', include(router.urls)),
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
