@@ -16,6 +16,18 @@
                             </h2>
                         </div>
                         <div class="card-body">
+
+                            <div class="form-group row justify-content-center">
+                                <label class="col-3" for="selector-metatimagem">Selecione se a imagem é segmentadao ou
+                                    não</label>
+                                <select class="col-4 form-control" id="selector-metatimagem">
+                                    <option value="">--</option>
+                                    <option value="segmentada"> Imagens Segmentadas</option>
+                                    <option value="não-segmentada"> Imagens não segmentadas</option>
+                                </select>
+                            </div>
+
+
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -98,6 +110,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block script %}
+    <script>
 
+    </script>
 {% endblock %}
