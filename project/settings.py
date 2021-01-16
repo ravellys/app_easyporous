@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def base_dir_join(*args):
     return os.path.join(BASE_DIR, *args)
 
+
 APPS_DIR = base_dir_join('apps')
 
 # Quick-start development settings - unsuitable for production
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     # Apps instalados
     'bootstrapform',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'rest_framework',
 
     # Apps criados
     'apps.dashboard',
@@ -123,7 +125,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -145,7 +146,14 @@ MEDIAFILES_DIRS = (
 
 AUTH_USER_MODEL = 'user.User'
 
-
 # configuration DjangoDashPlotly See: https://pypi.org/project/django-plotly-dash/
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+# configuration DRF See: https://www.django-rest-framework.org/#installation
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
