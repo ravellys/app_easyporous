@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block main %}
+
     <div class="content">
 
         <div class="main-content container-fluid">
@@ -15,18 +16,52 @@
                                 Lista de Imagens
                             </h2>
                         </div>
-                        <div class="card-body">
 
-                            <div class="form-group row justify-content-center">
+                        <div class="card-body" id="app-api">
+                            <div id="app-select-segmentada" class="row justify-content-center">
                                 <label class="col-3" for="selector-metatimagem">Selecione se a imagem é segmentadao ou
                                     não</label>
-                                <select class="col-4 form-control" id="selector-metatimagem">
+                                <select v-on:change="changeItem($event)" class="col-4 form-control">
                                     <option value="">--</option>
-                                    <option value="segmentada"> Imagens Segmentadas</option>
-                                    <option value="não-segmentada"> Imagens não segmentadas</option>
+                                    <option value="true"> Imagens Segmentadas</option>
+                                    <option value="false"> Imagens não segmentadas</option>
                                 </select>
                             </div>
 
+                            <h2> table Vue</h2>
+                            <table class="table"  >
+                                <thead>
+                                <tr>
+                                    <th style="width:20%;">Descrição</th>
+                                    <th style="width:20%;">É Segmentada?</th>
+                                    <th style="width:20%;">Porosidade</th>
+                                    <th style="width:15%;">Tipo
+                                    </th>
+                                    <th style="width:40%;">data upload</th>
+                                    <th class="actionlist" style="width:40%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="im in info">
+                                    <td>[[ im.descricao ]]</td>
+                                    <td>[[ im.is_segmentada ]]</td>
+                                    <td>[[ im.porosidade ]]</td>
+                                    <td>[[ im.tipo ]]</td>
+                                    <td>[[ im.created ]]</td>
+
+                                    <td class="actions">
+                                        <a href="" class="icon"
+                                           style="margin-right: 1rem"><i class="fa fa-fw fa-trash"></i></a>
+                                        <a href="" style="margin-right: 1rem"
+                                           class="icon"><i class="fa fa-fw fa-eye"></i></a>
+                                        </td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        <br>
+                            <h2> table Django temlate</h2>
 
                             <table class="table">
                                 <thead>
@@ -39,6 +74,8 @@
                                     <th style="width:20%;">Usuário</th>
                                     <th style="width:40%;">data upload</th>
                                     <th class="actionlist" style="width:40%;"></th>
+
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -110,10 +147,49 @@
             </div>
         </div>
     </div>
+
+
+
+
+
 {% endblock %}
 
 {% block script %}
+
     <script>
+        function isSegmentada(value) {
+            return value['is_segmentada'] === app_list.selected;
+        }
+
+        var app_list = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app-api',
+            data: function () {
+                return {
+                    info: null,
+                    selected: true,
+                }
+            },
+            methods: {
+                init: function init(){
+                    axios
+                        .get('http://127.0.0.1:7000/api/metaimagem/?format=json')
+                        .then(response => {
+                            let dados = response.data
+                            this.info = dados.filter(isSegmentada)
+                            console.log(dados.filter(isSegmentada))
+                        })
+                },
+                changeItem: function changeItem(event) {
+                    this.selected = event.target.value === 'true';
+                    console.log(this.selected)
+                    this.init()
+
+                }
+            }
+        })
+
+
 
     </script>
 {% endblock %}

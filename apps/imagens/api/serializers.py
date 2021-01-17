@@ -6,4 +6,4 @@ class MetaImagemSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = MetaImagem
-        fields = ('pk', 'descricao', 'is_segmentada')
+        fields = ('pk', 'descricao', 'is_segmentada', 'tipo', 'created', 'porosidade')
