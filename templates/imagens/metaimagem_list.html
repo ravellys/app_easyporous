@@ -18,17 +18,23 @@
                         </div>
 
                         <div class="card-body" id="app-api">
-                            <div id="app-select-segmentada" class="row justify-content-center">
-                                <label class="col-3" for="selector-metatimagem">Selecione se a imagem é segmentadao ou
-                                    não</label>
-                                <select v-on:change="changeItem($event)" class="col-4 form-control">
-                                    <option value="">--</option>
-                                    <option value="true"> Imagens Segmentadas</option>
-                                    <option value="false"> Imagens não segmentadas</option>
+                            <div class="row m-2 justify-content-center">
+                                <select v-on:change="changeItem($event)" class="col-12 form-control">
+                                    <option value="">Selecione o Filtro de Imagem</option>
+                                    <option value="true"> Imagens Segmentadas </option>
+                                    <option value="false"> Imagens Não Segmentadas </option>
+                                    <option value="all"> Todas Imagens </option>
+                                </select>
+                            </div>
+                            <div class="row m-2 justify-content-center" v-bind:style="{ display: mostrar }">
+                                <select v-on:change="changeItemTipo($event)" class="col-12 form-control">
+                                    <option value="">Selecione o Tipo de Imagem</option>
+                                    <option value="Rocha"> Rocha </option>
+                                    <option value="Solo"> Solo </option>
+                                    <option value="all"> Todas Imagens </option>
                                 </select>
                             </div>
 
-                            <h2> table Vue</h2>
                             <table class="table"  >
                                 <thead>
                                 <tr>
@@ -48,99 +54,20 @@
                                     <td>[[ im.porosidade ]]</td>
                                     <td>[[ im.tipo ]]</td>
                                     <td>[[ im.created ]]</td>
-
                                     <td class="actions">
-                                        <a href="" class="icon"
-                                           style="margin-right: 1rem"><i class="fa fa-fw fa-trash"></i></a>
-                                        <a href="" style="margin-right: 1rem"
-                                           class="icon"><i class="fa fa-fw fa-eye"></i></a>
-                                        </td>
-
+                                        <a class="icon" style="margin-right: 1rem" v-bind:href="im.url_delete">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </a>
+                                        <a href="" style="margin-right: 1rem" class="icon" v-bind:href="im.url_detail">
+                                            <i class="fa fa-fw fa-eye"></i>
+                                        </a>
+                                    </td>
                                 </tr>
 
                                 </tbody>
                             </table>
                         <br>
-                            <h2> table Django temlate</h2>
 
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th style="width:20%;">Descrição</th>
-                                    <th style="width:20%;">É Segmentada?</th>
-                                    <th style="width:20%;">Porosidade</th>
-                                    <th style="width:15%;">Tipo
-                                    </th>
-                                    <th style="width:20%;">Usuário</th>
-                                    <th style="width:40%;">data upload</th>
-                                    <th class="actionlist" style="width:40%;"></th>
-
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for imagem in object_list %}
-                                    <tr>
-                                        <td><a href="">{{ imagem.descricao }}</a></td>
-                                        <td>{{ imagem.is_segmentada }}</td>
-                                        <td>
-                                            {% if imagem.is_segmentada %}
-                                                {{ imagem.porosidade }}
-                                            {% else %}
-                                                imagem não segmentada
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ imagem.tipo }}</td>
-                                        <td>{{ imagem.user }}</td>
-                                        <td>{{ imagem.created }}</td>
-
-                                        <td class="actions">
-                                            <a href="{% url 'delete_image' imagem.id %}" class="icon"
-                                               style="margin-right: 1rem"><i class="fa fa-fw fa-trash"></i></a>
-                                            <a href="{% url 'detail_image' imagem.id %}" style="margin-right: 1rem"
-                                               class="icon"><i class="fa fa-fw fa-eye"></i></a> <a href=""
-                                                                                                   style="margin-right: 1rem"
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        {% if page_obj.has_other_pages %}
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    {% if page_obj.has_previous %}
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               href="?page={{ page_obj.previous_page_number }}"
-                                                               tabindex="-1">Anterior</a>
-                                                        </li>
-                                                    {% endif %}
-                                                    {% for i in page_obj.paginator.page_range %}
-                                                        {% if page_obj.number == i %}
-                                                            <li class="page-item active">
-                                                                <div class="page-link">{{ i }}</div>
-                                                            </li>
-                                                        {% else %}
-                                                            <li class="page-item"><a class="page-link"
-                                                                                     href="?page={{ i }}">{{ i }}</a>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    {% if page_obj.has_next %}
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               href="?page={{ page_obj.next_page_number }}">Próxima</a>
-                                                        </li>
-                                                    {% endif %}
-                                                </ul>
-                                            </nav>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -148,17 +75,16 @@
         </div>
     </div>
 
-
-
-
-
 {% endblock %}
 
 {% block script %}
 
     <script>
         function isSegmentada(value) {
-            return value['is_segmentada'] === app_list.selected;
+            return value['is_segmentada'] === (app_list.selected === 'true');
+        }
+        function tipo(value) {
+            return value['tipo'] === app_list.tipo;
         }
 
         var app_list = new Vue({
@@ -167,24 +93,35 @@
             data: function () {
                 return {
                     info: null,
-                    selected: true,
+                    selected: 'true',
+                    tipo: 'all',
+                    mostrar: 'none',
                 }
             },
             methods: {
                 init: function init(){
                     axios
-                        .get('http://127.0.0.1:7000/api/metaimagem/?format=json')
+                        .get('/api/metaimagem/?format=json')
                         .then(response => {
                             let dados = response.data
-                            this.info = dados.filter(isSegmentada)
-                            console.log(dados.filter(isSegmentada))
+                            this.info = dados.filter(isSegmentada).filter(tipo)
+                            if (this.selected === 'all' && this.tipo === 'all'){
+                                this.info = dados
+                            } else if (this.selected === 'all'){
+                                this.info = dados.filter(tipo)
+                            } else if (this.tipo === 'all'){
+                                this.info = dados.filter(isSegmentada)
+                            }
                         })
                 },
                 changeItem: function changeItem(event) {
-                    this.selected = event.target.value === 'true';
-                    console.log(this.selected)
+                    this.selected = event.target.value;
+                    this.mostrar = 'inline';
                     this.init()
-
+                },
+                changeItemTipo: function changeItemTipo(event) {
+                    this.tipo = event.target.value;
+                    this.init()
                 }
             }
         })

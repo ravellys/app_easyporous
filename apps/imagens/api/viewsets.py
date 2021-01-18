@@ -10,7 +10,3 @@ class MetaImagemViewSet(viewsets.ModelViewSet):
     queryset = MetaImagem.objects.all()
     serializer_class = MetaImagemSerializer
 
-
-class MetaImagemSegmentadaViewSet(viewsets.ModelViewSet):
-    queryset = MetaImagem.objects.filter(is_segmentada=True)
-    serializer_class = MetaImagemSerializer

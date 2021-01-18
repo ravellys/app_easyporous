@@ -19,11 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from apps.imagens.api.viewsets import MetaImagemViewSet, MetaImagemSegmentadaViewSet
+from apps.imagens.api.viewsets import MetaImagemViewSet
 
 router = routers.DefaultRouter()
 router.register(r'api/metaimagem', MetaImagemViewSet)
-router.register(r'api/metaimagem-segmentada', MetaImagemSegmentadaViewSet)
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
