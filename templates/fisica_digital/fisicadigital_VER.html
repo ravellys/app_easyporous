@@ -1,0 +1,132 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Lista de Documentos
+{% endblock %}
+
+{% block main %}
+
+    <div class="content">
+        <div class="main-content container-fluid">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h2 class="page-head-title">
+                                Cálculo do Volume Elementar Representativo
+                            </h2>
+                        </div>
+
+                        <div class="card-body" id="app-api">
+
+                            <div class="row m-2 justify-content-center">
+                                <select v-on:change="changeItemTipo($event)" class="col-12 form-control">
+                                    <option value="">Selecione o Tipo de Imagem</option>
+                                    <option value="Rocha"> Rocha </option>
+                                    <option value="Solo"> Solo </option>
+                                    <option value="all"> Todas Imagens </option>
+                                </select>
+                            </div>
+
+                            <div class="row m-2 justify-content-center">
+                                <select class="col-9 form-control" >
+                                    <option v-for="im in info" :value="im.pk" :key="im.pk" id="im-options">[[ im.descricao ]]</option>                                    >
+                                </select>
+                                <button v-on:click="calculaVER($event)" type="button" class="btn btn-info col-3 mx-auto" > Selecionar </button>
+                            </div>
+
+                            <br>
+
+                            <scatter-chart :data="dados" xtitle="Aresta" ytitle="Porosity"></scatter-chart>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script type="application/javascript">
+        function tipo(value) {
+            return value['tipo'] === app_list.tipo;
+        }
+
+        function isSegmentada(value) {
+            return value['is_segmentada'] === true;
+        }
+
+        var app_list = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app-api',
+            data: function () {
+                return {
+                    info: null,
+                    tipo: 'all',
+                    dados: [],
+                    p1: [1,2],
+                    p2: [2,3]
+                }
+            },
+            methods: {
+                init: function init(){
+                    axios
+                        .get('/api/metaimagem/?format=json')
+                        .then(response => {
+                            let dados = response.data
+                            this.info = dados.filter(isSegmentada).filter(tipo)
+                            if (this.tipo === 'all'){
+                                this.info = dados.filter(isSegmentada)
+                            }
+                        })
+                },
+                changeItemTipo: function changeItemTipo(event) {
+                    this.tipo = event.target.value;
+                    this.init()
+                },
+                calculaVER: function calculaVER(event){
+                    let imId = document.getElementById('im-options').value;
+                    axios
+                        .get(`/imagens/api/VER/${imId}`)
+                        .then(response => {
+                            let dados_ver = response.data;
+                            this.dados = dados_ver['dados'];
+                        })
+                }
+            }
+        })
+    </script>
+
+
+{#    <script>#}
+{#        var app_VER = new Vue({#}
+{#            delimiters:['[[', ']]'],#}
+{#            el: '#app-VER',#}
+{#            data: function (){#}
+{#                return {#}
+{#                    vol: [],#}
+{#                    porosity: [],#}
+{#                }#}
+{#            },#}
+{#            methods: {#}
+{#                init: function init() {#}
+{#                    let imId = document.getElementById('im-options');#}
+{#                    console.log(imId)#}
+{##}
+{#                    // axios.get(`/api/VER/${imId}/`)#}
+{##}
+{#                },#}
+{#                calculaVER: function calculaVER(event){#}
+{#                    this.init()#}
+{#                }#}
+{##}
+{##}
+{#            }#}
+{#        })#}
+{##}
+{#    </script>#}
+{% endblock %}

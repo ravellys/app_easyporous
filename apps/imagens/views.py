@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, DetailView, TemplateView
 
 from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos
@@ -76,3 +78,7 @@ class SegmentacaoView(CreateView):
         salvar_imagens_segmentadas(metodo_segmentacao, im_seg, list_imagens, meta_imagem_seg)
 
         return redirect(reverse('list_image'))
+
+
+class VERTemplateView(TemplateView):
+    template_name = 'fisica_digital/fisicadigital_VER.html'
