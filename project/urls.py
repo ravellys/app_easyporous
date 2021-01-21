@@ -29,6 +29,7 @@ urlpatterns = [
                   path('', include('apps.dashboard.urls')),
                   path('usuário/', include("apps.user.urls")),
                   path('imagens/', include("apps.imagens.urls")),
+                  path('fisicadigital/', include("apps.fisicadigital.urls")),
 
                   path('django_plotly_dash/', include('django_plotly_dash.urls')),
                   path('', include(router.urls)),

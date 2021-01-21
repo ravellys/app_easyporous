@@ -17,28 +17,33 @@
                         </div>
 
                         <div class="card-body" id="app-api">
+                            <div class="row justify-content-center d-flex">
+                                <div class="col-4">
+                                    <select v-on:change="changeItemTipo($event)" class="form-control">
+                                        <option value="">Selecione o Tipo de Imagem</option>
+                                        <option value="Rocha"> Rocha</option>
+                                        <option value="Solo"> Solo</option>
+                                        <option value="all"> Todas Imagens</option>
+                                    </select>
+                                </div>
 
-                            <div class="row m-2 justify-content-center">
-                                <select v-on:change="changeItemTipo($event)" class="col-12 form-control">
-                                    <option value="">Selecione o Tipo de Imagem</option>
-                                    <option value="Rocha"> Rocha </option>
-                                    <option value="Solo"> Solo </option>
-                                    <option value="all"> Todas Imagens </option>
-                                </select>
+                                <div class="col-8">
+                                    <div class="row justify-content-center mx-auto">
+                                        <select class="form-control col-8">
+                                            <option v-for="im in info" :value="im.pk" :key="im.pk" id="im-options">
+                                                [[ im.descricao ]]
+                                            </option>
+
+                                        </select>
+                                        <button v-on:click="calculaVER($event)" type="button"
+                                                class="btn btn-outline-dark col-3 mx-1"> Selecionar
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="row m-2 justify-content-center">
-                                <select class="col-9 form-control" >
-                                    <option v-for="im in info" :value="im.pk" :key="im.pk" id="im-options">[[ im.descricao ]]</option>                                    >
-                                </select>
-                                <button v-on:click="calculaVER($event)" type="button" class="btn btn-info col-3 mx-auto" > Selecionar </button>
-                            </div>
-
                             <br>
 
                             <scatter-chart :data="dados" xtitle="Aresta" ytitle="Porosity"></scatter-chart>
-
-
 
                         </div>
                     </div>
@@ -68,18 +73,18 @@
                     info: null,
                     tipo: 'all',
                     dados: [],
-                    p1: [1,2],
-                    p2: [2,3]
+                    p1: [1, 2],
+                    p2: [2, 3]
                 }
             },
             methods: {
-                init: function init(){
+                init: function init() {
                     axios
                         .get('/api/metaimagem/?format=json')
                         .then(response => {
                             let dados = response.data
                             this.info = dados.filter(isSegmentada).filter(tipo)
-                            if (this.tipo === 'all'){
+                            if (this.tipo === 'all') {
                                 this.info = dados.filter(isSegmentada)
                             }
                         })
@@ -88,10 +93,10 @@
                     this.tipo = event.target.value;
                     this.init()
                 },
-                calculaVER: function calculaVER(event){
+                calculaVER: function calculaVER(event) {
                     let imId = document.getElementById('im-options').value;
                     axios
-                        .get(`/imagens/api/VER/${imId}`)
+                        .get(`/fisicadigital/api/VER/${imId}`)
                         .then(response => {
                             let dados_ver = response.data;
                             this.dados = dados_ver['dados'];
@@ -102,31 +107,4 @@
     </script>
 
 
-{#    <script>#}
-{#        var app_VER = new Vue({#}
-{#            delimiters:['[[', ']]'],#}
-{#            el: '#app-VER',#}
-{#            data: function (){#}
-{#                return {#}
-{#                    vol: [],#}
-{#                    porosity: [],#}
-{#                }#}
-{#            },#}
-{#            methods: {#}
-{#                init: function init() {#}
-{#                    let imId = document.getElementById('im-options');#}
-{#                    console.log(imId)#}
-{##}
-{#                    // axios.get(`/api/VER/${imId}/`)#}
-{##}
-{#                },#}
-{#                calculaVER: function calculaVER(event){#}
-{#                    this.init()#}
-{#                }#}
-{##}
-{##}
-{#            }#}
-{#        })#}
-{##}
-{#    </script>#}
 {% endblock %}
