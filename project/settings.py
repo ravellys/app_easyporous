@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.user',
     'apps.imagens',
+    'apps.fisicadigital',
 ]
 
 MIDDLEWARE = [

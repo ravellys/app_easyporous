@@ -81,4 +81,4 @@ class SegmentacaoView(CreateView):
 
 
 class VERTemplateView(TemplateView):
-    template_name = 'fisica_digital/fisicadigital_VER.html'
+    template_name = 'fisicadigital/fisicadigital_VER.html'

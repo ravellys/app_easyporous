@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from apps.imagens.api.viewsets import api_images, api_VER
+from apps.imagens.api.viewsets import api_images
 from apps.imagens.views import MetaImagemListView, MetaImagemCreateView, MetaImagemDeleteView, MetaImagemDetailView, \
     MetaImagemTemplateView, SegmentacaoView, VERTemplateView
 
@@ -20,5 +20,4 @@ urlpatterns = [
     path('segmentacao/', SegmentacaoView.as_view(), name='segmentacao_image'),
     path('VER/', VERTemplateView.as_view(), name='VER_image'),
     path('api/<int:pk>', api_images, name='api_image'),
-    path('api/VER/<int:pk>', api_VER, name='api_VER'),
 ]
