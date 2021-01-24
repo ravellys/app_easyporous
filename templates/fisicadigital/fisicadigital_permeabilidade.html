@@ -35,7 +35,7 @@
                                             </option>
 
                                         </select>
-                                        <button v-on:click="calculaVER($event)" type="button"
+                                        <button v-on:click="calculaPermeabilidade($event)" type="button"
                                                 class="btn btn-outline-dark col-3 mx-1"> Selecionar
                                         </button>
                                     </div>
@@ -44,7 +44,7 @@
                             <br>
 
                             <div>
-                                <p> A permeabilidade é de: <span> [[ dados ]] </span> mD </p>
+                                <p> A permeabilidade é de: <b> [[ dados ]] </b> mD </p>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                     this.tipo = event.target.value;
                     this.init()
                 },
-                calculaVER: function calculaVER(event) {
+                calculaPermeabilidade: function calculaPermeabilidade(event) {
                     let imId = document.getElementById('select-img').value;
                     console.log(imId)
                     axios

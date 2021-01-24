@@ -38,7 +38,6 @@ def api_permeabilidade(request, pk):
         list_imagens = seleciona_lista_arquivos(int(pk))
         im = import_file(list_imagens)
         meta_imagem = MetaImagem.objects.get(id=int(pk))
-        print(meta_imagem.resolucao)
 
         resolution = float(meta_imagem.resolucao) * 10**-6  # resolução que a amostra foi escaneada
         net = ps.networks.snow_n(im=im, voxel_size=resolution)
@@ -79,7 +78,6 @@ def api_permeabilidade(request, pk):
         mu = mercurio['pore.viscosity'].max()
         delta_P = pBottom - pTop
         K = (Q * L * mu / (A * delta_P))/0.98e-12*1000
-        print(K)
         Permeabilidade.objects.create(meta_imagem=meta_imagem, permeabilidade=K[0]).save()
 
         return JsonResponse({'permeability': K[0]})
@@ -87,6 +85,7 @@ def api_permeabilidade(request, pk):
 
 class VERTemplateView(TemplateView):
     template_name = 'fisicadigital/fisicadigital_VER.html'
+
 
 class PermeabilidadeTemplateView(TemplateView):
     template_name = 'fisicadigital/fisicadigital_permeabilidade.html'
