@@ -22,7 +22,7 @@ def calcula_threshold(im, metodo_segmentacao):
 def segmenta_imagem(list_imagens, metodo_segmentacao):
     im = import_file(list_imagens)
     thresh = calcula_threshold(im, metodo_segmentacao)
-    im_seg = im > thresh
+    im_seg = im <= thresh
     return im_seg
 
 

@@ -19,6 +19,9 @@ class MetaImagem(BestPraticesModel):
     is_segmentada = models.BooleanField(default=False, verbose_name='A imagem está segmentada')
     porosidade = models.DecimalField(null=True, blank=True, verbose_name='porosidade', max_digits=8, decimal_places=2)
 
+    resolucao = models.DecimalField(verbose_name='resolução em que a imagem foi escaneada em micrômetros', max_digits=4, decimal_places=2)
+
+
     def __str__(self):
         return self.descricao
 

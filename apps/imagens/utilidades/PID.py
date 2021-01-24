@@ -24,7 +24,8 @@ def cria_meta_imagem_segmentada(user, meta_imagem, metodo_segmentacao, im_seg):
         descricao=meta_imagem.descricao + ', segmentada por ' + metodo_segmentacao,
         tipo=meta_imagem.tipo,
         is_segmentada=True,
-        porosidade=porosidade(im_seg)
+        porosidade=porosidade(im_seg),
+        resolucao=meta_imagem.resolucao,
     )
     meta_imagem_seg.save()
     return meta_imagem_seg

@@ -30,7 +30,7 @@ def seleciona_lista_arquivos(meta_imagem_id):
 
 
 def porosidade(im):
-    return 1 - (im.sum() / (im.shape[0] * im.shape[1] * im.shape[2]))
+    return im.sum() / (im.shape[0] * im.shape[1] * im.shape[2])
 
 
 if __name__ == '__main__':

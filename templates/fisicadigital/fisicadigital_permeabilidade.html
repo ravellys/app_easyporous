@@ -12,7 +12,7 @@
                     <div class="card card-table">
                         <div class="card-header">
                             <h2 class="page-head-title">
-                                Cálculo do Volume Elementar Representativo
+                                Cálculo da permeabilidade por rede de poros
                             </h2>
                         </div>
 
@@ -43,8 +43,9 @@
                             </div>
                             <br>
 
-                            <scatter-chart :data="dados" xtitle="Aresta" ytitle="Porosity"></scatter-chart>
-
+                            <div>
+                                <p> A permeabilidade é de: <span> [[ dados ]] </span> mD </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
                 return {
                     info: null,
                     tipo: 'all',
-                    dados: []
+                    dados: '',
                 }
             },
             methods: {
@@ -95,10 +96,10 @@
                     let imId = document.getElementById('select-img').value;
                     console.log(imId)
                     axios
-                        .get(`/fisicadigital/api/VER/${imId}`)
+                        .get(`/fisicadigital/api/permeabilidade/${imId}`)
                         .then(response => {
-                            let dados_ver = response.data;
-                            this.dados = dados_ver['dados'];
+                            let permeabilidade = response.data;
+                            this.dados = permeabilidade['dados'];
                         })
                 }
             }

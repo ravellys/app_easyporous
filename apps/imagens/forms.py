@@ -19,7 +19,7 @@ class MetaImagemForm(forms.ModelForm):
 
     class Meta:
         model = MetaImagem
-        fields = ['descricao', 'tipo']
+        fields = ['descricao', 'tipo', 'resolucao']
 
 
 class SegmentacaoForm(forms.ModelForm):

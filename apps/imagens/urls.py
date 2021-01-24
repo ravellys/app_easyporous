@@ -3,7 +3,7 @@ from django.urls import path
 
 from apps.imagens.api.viewsets import api_images
 from apps.imagens.views import MetaImagemListView, MetaImagemCreateView, MetaImagemDeleteView, MetaImagemDetailView, \
-    MetaImagemTemplateView, SegmentacaoView, VERTemplateView
+    MetaImagemTemplateView, SegmentacaoView
 
 try:
     from apps.imagens.dash_app import exemplo
@@ -18,6 +18,6 @@ urlpatterns = [
     path('detalhes/<int:pk>', MetaImagemDetailView.as_view(), name='detail_image'),
     path('detalhes/', MetaImagemTemplateView.as_view(), name='detail_images'),
     path('segmentacao/', SegmentacaoView.as_view(), name='segmentacao_image'),
-    path('VER/', VERTemplateView.as_view(), name='VER_image'),
+
     path('api/<int:pk>', api_images, name='api_image'),
 ]
