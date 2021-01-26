@@ -14,3 +14,8 @@ class VER(BestPraticesModel):
 class Permeabilidade(BestPraticesModel):
     meta_imagem = models.ForeignKey(MetaImagem, on_delete=models.PROTECT, verbose_name='meta_imagem')
     permeabilidade = models.DecimalField(max_digits=8, decimal_places=2)
+
+
+class CurvaRetencao(BestPraticesModel):
+    meta_imagem = models.ForeignKey(MetaImagem, on_delete=models.PROTECT, verbose_name='meta_imagem')
+    data_curvaretencao = jsonfield.JSONField()

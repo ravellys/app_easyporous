@@ -4,17 +4,15 @@ import porespy as ps
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 
-from apps.fisicadigital.models import VER, Permeabilidade
+from apps.fisicadigital.models import VER, Permeabilidade, CurvaRetencao
 from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos, import_file
 from apps.imagens.models import MetaImagem
 
 
 def api_VER(request, pk):
     try:
-        print(pk)
         ver = VER.objects.get(meta_imagem=int(pk))
         data_dict = json.loads(ver.data_ver)
-        print('objeto existe')
         return JsonResponse(data_dict)
     except:
         list_imagens = seleciona_lista_arquivos(int(pk))
@@ -24,17 +22,14 @@ def api_VER(request, pk):
         dados_json = json.dumps({'dados': dados})
         meta_imagem = MetaImagem.objects.get(id=int(pk))
         VER.objects.create(meta_imagem=meta_imagem, data_ver=dados_json).save()
-        print('objeto não existe')
         return JsonResponse({'dados': dados})
 
 
 def api_permeabilidade(request, pk):
     try:
         permeabilidade = Permeabilidade.objects.get(meta_imagem=int(pk))
-        print('objeto existe')
         return JsonResponse({'dados': permeabilidade.permeabilidade})
     except:
-        print('objeto não existe')
         list_imagens = seleciona_lista_arquivos(int(pk))
         im = import_file(list_imagens)
         meta_imagem = MetaImagem.objects.get(id=int(pk))
@@ -83,9 +78,34 @@ def api_permeabilidade(request, pk):
         return JsonResponse({'permeability': K[0]})
 
 
+def api_curvaretencao(request, pk):
+    try:
+        cr = CurvaRetencao.objects.get(meta_imagem=int(pk))
+        data_dict = json.loads(cr.data_curvaretencao)
+        print('objeto existe')
+        return JsonResponse(data_dict)
+    except:
+        list_imagens = seleciona_lista_arquivos(int(pk))
+        im = import_file(list_imagens)
+        meta_imagem = MetaImagem.objects.get(id=int(pk))
+        resolution = float(meta_imagem.resolucao) * 10 ** -6  # resolução que a amostra foi escaneada
+
+        mip = ps.filters.porosimetry(im, sizes=25)
+        data = ps.metrics.pore_size_distribution(mip, bins=10, log=True, voxel_size=resolution)
+        dados = [[r, s] for r, s in zip(data.logR, data.satn)]
+        dados_json = json.dumps({'curva_retencao': dados})
+        CurvaRetencao.objects.create(meta_imagem=meta_imagem, data_curvaretencao=dados_json).save()
+        print(dados)
+        return JsonResponse({'curva_retencao': dados})
+
+
 class VERTemplateView(TemplateView):
     template_name = 'fisicadigital/fisicadigital_VER.html'
 
 
 class PermeabilidadeTemplateView(TemplateView):
     template_name = 'fisicadigital/fisicadigital_permeabilidade.html'
+
+
+class CurvaRetencaoTemplateView(TemplateView):
+    template_name = 'fisicadigital/fisicadigital_curva_retencao.html'
