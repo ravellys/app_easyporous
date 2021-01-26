@@ -1,10 +1,11 @@
 import json
 import openpnm as op
 import porespy as ps
+import numpy as np
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 
-from apps.fisicadigital.models import VER, Permeabilidade, CurvaRetencao
+from apps.fisicadigital.models import VER, Permeabilidade, CurvaRetencao, PerfilPorosidade
 from apps.imagens.dash_app.utilidades.import_imagem import seleciona_lista_arquivos, import_file
 from apps.imagens.models import MetaImagem
 
@@ -82,7 +83,6 @@ def api_curvaretencao(request, pk):
     try:
         cr = CurvaRetencao.objects.get(meta_imagem=int(pk))
         data_dict = json.loads(cr.data_curvaretencao)
-        print('objeto existe')
         return JsonResponse(data_dict)
     except:
         list_imagens = seleciona_lista_arquivos(int(pk))
@@ -95,8 +95,23 @@ def api_curvaretencao(request, pk):
         dados = [[r, s] for r, s in zip(data.logR, data.satn)]
         dados_json = json.dumps({'curva_retencao': dados})
         CurvaRetencao.objects.create(meta_imagem=meta_imagem, data_curvaretencao=dados_json).save()
-        print(dados)
         return JsonResponse({'curva_retencao': dados})
+
+
+def api_perfil_porosidade(request, pk):
+    try:
+        pp = PerfilPorosidade.objects.get(meta_imagem=int(pk))
+        data_dict = json.loads(pp.data_perfilporosidade)
+        return JsonResponse(data_dict)
+    except:
+        list_imagens = seleciona_lista_arquivos(int(pk))
+        im = import_file(list_imagens)
+        meta_imagem = MetaImagem.objects.get(id=int(pk))
+
+        dados = [[i.sum()/np.prod(i.shape), pos] for pos, i in enumerate(im.T)]
+        dados_json = json.dumps({'perfil_porosidade': dados})
+        PerfilPorosidade.objects.create(meta_imagem=meta_imagem, data_perfilporosidade=dados_json).save()
+        return JsonResponse({'perfil_porosidade': dados})
 
 
 class VERTemplateView(TemplateView):
@@ -109,3 +124,7 @@ class PermeabilidadeTemplateView(TemplateView):
 
 class CurvaRetencaoTemplateView(TemplateView):
     template_name = 'fisicadigital/fisicadigital_curva_retencao.html'
+
+
+class PerfilPorosidadeTemplateView(TemplateView):
+    template_name = 'fisicadigital/fisicadigital_perfil_porosidade.html'
