@@ -4,5 +4,5 @@ from django.urls import path
 from apps.dashboard.views import DashboardViews
 
 urlpatterns = [
-    path('', DashboardViews.as_view(), name="dashboard-main"),
+    path('', login_required(DashboardViews.as_view()), name="dashboard-main"),
 ]

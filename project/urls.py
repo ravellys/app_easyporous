@@ -31,6 +31,7 @@ urlpatterns = [
                   path('imagens/', include("apps.imagens.urls")),
                   path('fisicadigital/', include("apps.fisicadigital.urls")),
 
+                  path('', include('django.contrib.auth.urls')),
                   path('django_plotly_dash/', include('django_plotly_dash.urls')),
                   path('', include(router.urls)),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \

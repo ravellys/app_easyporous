@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load bootstrap %}
+
+{% block title %}
+    Página Login
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|bootstrap }}
+            <button type="submit"> Entrar</button>
+        </form>
+    </div>
+{% endblock %}

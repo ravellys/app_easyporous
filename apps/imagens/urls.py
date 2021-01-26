@@ -12,12 +12,12 @@ except:
     pass
 
 urlpatterns = [
-    path('listar/', MetaImagemListView.as_view(), name='list_image'),
-    path('upload/', MetaImagemCreateView.as_view(), name='create_image'),
-    path('deletar/<int:pk>', MetaImagemDeleteView.as_view(), name='delete_image'),
-    path('detalhes/<int:pk>', MetaImagemDetailView.as_view(), name='detail_image'),
-    path('detalhes/', MetaImagemTemplateView.as_view(), name='detail_images'),
-    path('segmentacao/', SegmentacaoView.as_view(), name='segmentacao_image'),
+    path('listar/', login_required(MetaImagemListView.as_view()), name='list_image'),
+    path('upload/', login_required(MetaImagemCreateView.as_view()), name='create_image'),
+    path('deletar/<int:pk>', login_required(MetaImagemDeleteView.as_view()), name='delete_image'),
+    path('detalhes/<int:pk>', login_required(MetaImagemDetailView.as_view()), name='detail_image'),
+    path('detalhes/', login_required(MetaImagemTemplateView.as_view()), name='detail_images'),
+    path('segmentacao/', login_required(SegmentacaoView.as_view()), name='segmentacao_image'),
 
-    path('api/<int:pk>', api_images, name='api_image'),
+    path('api/<int:pk>', login_required(api_images), name='api_image'),
 ]

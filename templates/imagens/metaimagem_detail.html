@@ -19,10 +19,14 @@
                                 </div>
                             </div>
 
-                            <embed src="http://127.0.0.1:7000/media/im_68.tif" type="image/tiff">
-                            <script src="https://cdn.rawgit.com/seikichi/tiff.js/master/tiff.min.js"></script>
-                            <label>Select TIFF file: <input type=file></label>
-                            <div></div>
+                            <h2>Hello OpenCV.js</h2>
+                            <div>
+                                <div class="inputoutput">
+                                    <img id="imageSrc" alt="No Image"/>
+                                    <div class="caption">imageSrc <input type="file" id="fileInput" name="file"/></div>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
@@ -32,24 +36,12 @@
     </div>
 {% endblock %}
 {% block script %}
-    <script src="https://cdn.rawgit.com/seikichi/tiff.js/master/tiff.min.js"></script>
 
     <script>
-        var tiff = new Tiff({buffer: arrayBuffer});
-        var canvas = tiff.toCanvas();
-        document.querySelector("input").onchange = function () {
-
-            // convert File blob to ArrayBuffer using a FileReader
-            var fileReader = new FileReader();
-
-            fileReader.onload = function () {                     // file is now ArrayBuffer:
-                var tiff = new Tiff({buffer: this.result});        // parse and convert
-                var canvas = tiff.toCanvas();                      // convert to canvas
-                document.querySelector("div").appendChild(canvas); // show canvas with content
-            };
-
-            fileReader.readAsArrayBuffer(this.files[0]);         // convert selected file
-        };
-
+        let imgElement = document.getElementById("imageSrc")
+        let inputElement = document.getElementById("fileInput");
+        inputElement.addEventListener("change", (e) => {
+            imgElement.src = URL.createObjectURL(e.target.files[0]);
+        }, false);
     </script>
 {% endblock %}
